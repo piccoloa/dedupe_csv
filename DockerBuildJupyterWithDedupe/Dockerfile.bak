@@ -1,0 +1,19 @@
+FROM jupyter/pyspark-notebook
+
+USER root
+
+RUN apt-get update && \
+    apt-get -qy install --reinstall build-essential && \
+    apt-get -qy install gcc freetds-dev freetds-bin unixodbc-dev tdsodbc
+
+#add dedupe scripts
+ADD dedupe /dedupe
+
+RUN pip install --upgrade pip && \
+    pip install pyodbc pymysql unidecode && \
+    pip install -r /dedupe/requirements.txt
+
+ADD odbcinst.ini /etc/odbcinst.ini
+RUN odbcinst -q -d -i -f /etc/odbcinst.ini
+
+#RUN ["/bin/bash", "/dedupe/build_me.sh"]
