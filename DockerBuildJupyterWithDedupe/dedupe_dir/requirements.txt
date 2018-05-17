@@ -1,0 +1,6 @@
+pytest
+pytest-cov
+https://github.com/datamade/pytest-flake8/zipball/master
+cython
+mock
+py4j==0.10.6
